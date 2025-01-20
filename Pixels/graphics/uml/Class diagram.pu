@@ -1,0 +1,154 @@
+@startuml
+package dtu.compute.pixels.controller {
+    class Controller {
+        -Image image
+        -Image scratch
+        -Tool tool
+        -Color color
+        -Color color2
+        -Color activeColor
+        -Point previewPoint
+        -List<Observer> observers
+        -Stack<ActionState> actionHistory
+        -Tool lastUsedTool
+        -boolean gridVisible
+        +notifyChange()
+    }
+}
+
+package dtu.compute.pixels.controller.tools {
+    interface Tool {
+        +press(ctrl: Controller, point: Point)
+        +update(ctrl: Controller, point: Point)
+        +release(ctrl: Controller, point: Point)
+        +abandon(ctrl: Controller)
+        +isActive(): boolean
+    }
+
+    class Pen implements Tool {
+        -boolean pressed
+        -int brushSize
+    }
+
+    class Eraser implements Tool {
+        -boolean pressed
+        -int brushSize
+    }
+
+    class FillTool implements Tool {
+        -boolean drawing
+    }
+
+    class LineTool implements Tool {
+        -Point start
+        -boolean drawing
+    }
+
+    class OvalTool implements Tool {
+        -Point start
+        -boolean drawing
+    }
+
+    class SquareTool implements Tool {
+        -Point start
+        -boolean drawing
+    }
+
+    class StarTool implements Tool {
+        -Point start
+        -Point end
+        -boolean drawing
+    }
+
+    class PolygonTool implements Tool {
+        -Point points 
+        -boolean drawing
+    }
+
+    class TriangleTool implements Tool {
+        -Point firstPoint
+        -Point secondPoint
+        -boolean drawing
+        -boolean secondPointSet
+    }
+
+    Class PipetteTool implements Tool {
+    }
+}
+
+package dtu.compute.pixels.model {
+    class Image {
+        -Rect size
+        -int[] buffer
+    }
+
+    class Point {
+        +x(): int
+        +y(): int
+    }
+
+    class Color {
+        -byte alpha
+        -byte red
+        -byte green
+        -byte blue
+        +toARGB(): int
+    }
+
+    class Rect {
+        -int width
+        -int height
+        +width(): int
+        +height(): int
+    }
+
+    class ActionState {
+        -Image imageState
+        -Tool tool
+    }
+}
+
+package dtu.compute.pixels.util {
+    class ColorUtils {
+    }
+
+    class ImageUtils {
+    }
+}
+
+package dtu.compute.pixels.view {
+    interface Observer {
+        +onChange()
+    }
+
+    class MenuBarFactory {
+    }
+
+    class ToolBarFactory {
+    }
+
+    class Main {
+    }
+}
+
+Controller ..> Tool : uses >
+Controller --> Image
+Controller --> Point
+Controller --> Color
+Controller -up-|> Observer
+
+Tool <|.. Pen
+Tool <|.. Eraser
+Tool <|.. PipetteTool
+Tool <|.. PolygonTool
+Tool <|.. SquareTool
+Tool <|.. StarTool
+Tool <|.. LineTool
+Tool <|.. OvalTool
+Tool <|.. TriangleTool
+
+Image --> Rect : size
+ActionState --> Image : imageState
+ActionState --> Tool : tool
+
+@enduml

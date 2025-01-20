@@ -1,0 +1,78 @@
+@startuml
+
+start
+
+:Choose Tool;
+note right: Tools include:\n- Pen\n- Eraser\n- Fill Tool\n- Line Tool\n- Square Tool\n- Oval Tool\n- Pipette Tool\n- Grid;
+
+:Load Image (optional);
+
+repeat 
+  :Zoom In/Out (optional);
+repeat while (Want to Zoom More?) is (yes) not (no)
+
+partition "Tool Options" {
+
+    if (Tool == "Pen") then (yes)
+        :Set Default Pen Color to Black;
+        :Select Pen Color (Set Left-click and Right-click to a color);
+        :Select Pen Size (if applicable);
+    
+        :Press Mouse to Start Drawing;
+        repeat :Drag Mouse to Draw (optional);
+        repeat while (Mouse Pressed?) is (yes) not (no)
+    else (no)
+        if (Tool == "Fill Tool") then (yes)
+            :Set Default Fill Color to White;
+            :Select Fill Color (Set Left-click and Right-click to a color);
+            :Click on Canvas to Fill with Color;
+        else (no)
+            if (Tool == "Line" or Tool == "Square" or Tool == "Oval") then (yes)
+                :Set Default Shape Color to Black;
+                :Select Shape Color (Set Left-click and Right-click to a color);
+                :Select Shape Size (if applicable);
+            
+                :Press Mouse to Start Drawing;
+                :Drag Mouse to Define Shape (e.g., Line, Square, Oval);
+                if (Tool == "Square" or Tool == "Oval") then (yes)
+                    :Click on Inside to Fill with Fill Color;
+                endif
+            else (no)
+                if (Tool == "Eraser") then (yes)
+                    :Set Eraser Size;
+                    :Move Mouse to Desired Position;
+                    if (Mouse Pressed?) then (yes)
+                        :Erase at Mouse Position on Canvas/Image;
+                    else (no)
+                        :Do Not Erase;
+                    endif
+                else (no)
+                    if (Tool == "Pipette Tool") then (yes)
+                        :Activate Pipette Tool (Left-click or Right-click);
+                        if (Mouse Pressed?) then (Activted with left click)
+                            :Set Left-click Color;
+                        else (Activted with right click)
+                            :Set Right-click Color;
+                        endif
+                    else (no)
+                        :Tool Not Supported;
+                    endif
+                endif
+            endif
+        endif
+    endif
+}
+
+repeat 
+  :Undo Action (optional);
+repeat while (Want to Undo More?) is (yes) not (no)
+
+:Save Image (optional);
+
+:Shutdown Program;
+if(Shutdown?) then (yes)
+  stop
+else (Continue?)
+  :Choose Tool;
+
+@enduml

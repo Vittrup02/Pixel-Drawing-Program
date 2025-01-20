@@ -1,0 +1,18 @@
+@startgantt
+
+Project starts the 2024-01-02
+
+[Projekt planlægning] as [PP] lasts 1 days
+[Krav] as [K] lasts 4 days
+[kundemøde] happens at 2024-01-04
+[Analyse og design] as [AD] lasts 7 days
+[Implementering] starts at 2024-01-05 and lasts 14 days
+[MVP] happens at 2024-01-11
+[Test] starts at 2024-01-06 and lasts 13 days
+[Koden afleveres] happens at 2024-01-18
+[Rapport] lasts 18 days
+[Aflevering af rapport] happens at 2024-01-19
+
+
+
+@endgantt
